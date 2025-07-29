@@ -36,23 +36,14 @@ const Message = styled.p`
   color: #555;
 `;
 
-const Meta = styled.div`
-  font-size: 0.97rem;
-  color: #888;
-`;
 
 const PostCard = ({ post }) => {
-    const { title, image, message, sender, recipient } = post;
+    const { title, body } = post;
     return (
         <Card>
-            {image && <Image src={image} alt={title} />}
             <Content>
                 <Title>{title}</Title>
-                <Message>{message}</Message>
-                <Meta>
-                    <div><strong>To:</strong> {recipient}</div>
-                    <div><strong>From:</strong> {sender}</div>
-                </Meta>
+                <Message>{body}</Message>
             </Content>
         </Card>
     );

@@ -24,42 +24,25 @@ const Homepage = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        setTimeout(() => {
-            setPosts([
-                {
-                    id: 1,
-                    title: 'First Post',
-                    image: 'https://via.placeholder.com/150',
-                    message: 'This is the first post.',
-                    sender: 'Alice',
-                    recipient: 'Bob'
-                },
-                {
-                    id: 2,
-                    title: 'Second Post',
-                    image: 'https://via.placeholder.com/150',
-                    message: 'This is the second post.',
-                    sender: 'Charlie',
-                    recipient: 'Dave'
-                },
-                {
-                    id: 3,
-                    title: 'Third Post',
-                    image: 'https://via.placeholder.com/150',
-                    message: 'This is the third post.',
-                    sender: 'Eve',
-                    recipient: 'Frank'
-                },
-            ]);
-            setLoading(false);
-        }, 2000);
+        const fetchPosts = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+                const data = await response.json();
+                setPosts(data.slice(0, 20));
+            } catch (error) {
+                console.error('Failed to fetch posts:', error);
+                setPosts([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPosts();
     }, []);
 
     const filteredPosts = posts.filter(post =>
         post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.sender.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.recipient.toLowerCase().includes(searchTerm.toLowerCase())
+        post.body.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
