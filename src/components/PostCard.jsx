@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const Card = styled.div`
+const Card = styled(Link)`
+  display: block;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   width: 350px;
@@ -9,16 +11,12 @@ const Card = styled.div`
   overflow: hidden;
   background: #fff;
   margin: 0 auto;
+  text-decoration: none;
+  color: inherit;
   transition: box-shadow 0.2s;
   &:hover {
     box-shadow: 0 4px 20px rgba(0,0,0,0.13);
   }
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
 `;
 
 const Content = styled.div`
@@ -36,17 +34,13 @@ const Message = styled.p`
   color: #555;
 `;
 
-
-const PostCard = ({ post }) => {
-    const { title, body } = post;
-    return (
-        <Card>
-            <Content>
-                <Title>{title}</Title>
-                <Message>{body}</Message>
-            </Content>
-        </Card>
-    );
-};
+const PostCard = ({ post }) => (
+  <Card to={`/posts/${post.id}`}>
+    <Content>
+      <Title>{post.title}</Title>
+      <Message>{post.body}</Message>
+    </Content>
+  </Card>
+);
 
 export default PostCard;
